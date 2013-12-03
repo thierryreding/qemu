@@ -962,6 +962,15 @@ static void ti925t_initfn(Object *obj)
     cpu->reset_sctlr = 0x00000070;
 }
 
+static void arm720t_initfn(Object *obj)
+{
+    ARMCPU *cpu = ARM_CPU(obj);
+    set_feature(&cpu->env, ARM_FEATURE_V4T);
+    cpu->midr = ARM_CPUID_TI925T;
+    cpu->ctr = 0x5109149;
+    cpu->reset_sctlr = 0x00000070;
+}
+
 static void sa1100_initfn(Object *obj)
 {
     ARMCPU *cpu = ARM_CPU(obj);
@@ -1147,6 +1156,7 @@ typedef struct ARMCPUInfo {
 
 static const ARMCPUInfo arm_cpus[] = {
 #if !defined(CONFIG_USER_ONLY) || !defined(TARGET_AARCH64)
+    { .name = "arm720t",     .initfn = arm720t_initfn },
     { .name = "arm926",      .initfn = arm926_initfn },
     { .name = "arm946",      .initfn = arm946_initfn },
     { .name = "arm1026",     .initfn = arm1026_initfn },
